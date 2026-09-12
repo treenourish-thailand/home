@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TreeNourish Thailand | Thanaka Acne Clay Cream</title>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green-dark:#2f5741; --green:#5b7a52; --sage:#8a9e78;
+  --sand:#e8dcc0; --cream:#f7f1e3; --gold:#b8935a;
+  --text:#2b2b26; --muted:#6d6d63; --white:#fff;
+  --radius:16px; --shadow:0 6px 24px rgba(47,87,65,.10);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Prompt',sans-serif;color:var(--text);background:var(--cream);line-height:1.65;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+.container{width:100%;max-width:1180px;margin:0 auto;padding:0 20px}
+.en{display:none}
+html[data-lang="en"] .th{display:none}
+html[data-lang="en"] .en{display:inline}
+html[data-lang="en"] li.en,html[data-lang="en"] p.en,html[data-lang="en"] div.en,html[data-lang="en"] h1.en,html[data-lang="en"] h2.en,html[data-lang="en"] h3.en{display:block}
+
+/* ---------- TOPBAR ---------- */
+.topbar{background:var(--green-dark);color:#e9e2cf;font-size:.8rem;padding:7px 0}
+.topbar .container{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.topbar a:hover{color:#fff}
+
+/* ---------- NAV ---------- */
+header{position:sticky;top:0;z-index:100;background:rgba(247,241,227,.96);backdrop-filter:blur(8px);box-shadow:0 2px 12px rgba(0,0,0,.06)}
+nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0;gap:14px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-mark{width:42px;height:42px;border-radius:50%;background:var(--green-dark);color:#fff;display:grid;place-items:center;font-weight:700}
+.logo b{font-size:1.15rem;color:var(--green-dark);letter-spacing:.5px;line-height:1.1;display:block}
+.logo small{font-size:.68rem;color:var(--muted);letter-spacing:1.5px}
+.nav-links{display:flex;gap:26px;font-size:.92rem;font-weight:500}
+.nav-links a{padding:4px 0;border-bottom:2px solid transparent;transition:.2s}
+.nav-links a:hover{color:var(--green-dark);border-color:var(--gold)}
+.nav-right{display:flex;align-items:center;gap:12px}
+.lang{display:flex;border:1px solid var(--sage);border-radius:20px;overflow:hidden;font-size:.75rem}
+.lang button{border:0;background:transparent;padding:5px 11px;cursor:pointer;font-family:inherit;font-weight:600;color:var(--muted)}
+.lang button.active{background:var(--green-dark);color:#fff}
+.icon-btn{background:transparent;border:1px solid var(--sage);border-radius:50%;width:38px;height:38px;display:grid;place-items:center;cursor:pointer;font-size:1rem;position:relative}
+.cart-count{position:absolute;top:-5px;right:-5px;background:var(--gold);color:#fff;font-size:.65rem;width:19px;height:19px;border-radius:50%;display:grid;place-items:center;font-weight:700}
+.burger{display:none;font-size:1.5rem;background:none;border:0;cursor:pointer}
+
+/* ---------- HERO ---------- */
+.hero{background:linear-gradient(135deg,#e8dcc0 0%,#f2ead6 55%,#dfe6d3 100%);padding:56px 0 64px;position:relative;overflow:hidden}
+.hero .container{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
+.badge{display:inline-block;background:var(--green-dark);color:#fff;font-size:.72rem;letter-spacing:2px;padding:5px 16px;border-radius:20px;margin-bottom:16px}
+.hero h1{font-size:2.7rem;line-height:1.25;color:var(--green-dark);font-weight:700;margin-bottom:8px}
+.hero .sub{font-size:1.05rem;color:var(--muted);margin-bottom:22px}
+.hero-points{list-style:none;margin-bottom:26px}
+.hero-points li{padding:5px 0 5px 30px;position:relative;font-size:.98rem}
+.hero-points li::before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:700;background:#fff;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:.7rem;top:8px}
+.btn{display:inline-block;padding:13px 30px;border-radius:30px;font-weight:600;font-size:.95rem;cursor:pointer;border:0;font-family:inherit;transition:.25s}
+.btn-primary{background:var(--green-dark);color:#fff}
+.btn-primary:hover{background:#24422f;transform:translateY(-2px)}
+.btn-outline{background:transparent;border:1.6px solid var(--green-dark);color:var(--green-dark)}
+.btn-outline:hover{background:var(--green-dark);color:#fff}
+.btn-sm{padding:9px 18px;font-size:.85rem}
+.hero-visual{position:relative}
+.hero-visual img{border-radius:24px;box-shadow:0 20px 50px rgba(47,87,65,.22)}
+.spf-tag{position:absolute;bottom:18px;left:-14px;background:#fff;padding:10px 18px;border-radius:14px;box-shadow:var(--shadow);font-weight:600;font-size:.85rem;color:var(--green-dark)}
+
+/* ---------- TRUST BAR ---------- */
+.trust{background:var(--green-dark);color:#eae3d0;padding:16px 0}
+.trust .container{display:flex;justify-content:space-around;flex-wrap:wrap;gap:14px;font-size:.85rem;text-align:center}
+
+/* ---------- SECTIONS ---------- */
+section{padding:64px 0}
+.sec-head{text-align:center;max-width:640px;margin:0 auto 40px}
+.sec-head span{color:var(--gold);font-size:.78rem;letter-spacing:3px;font-weight:600}
+.sec-head h2{font-size:2rem;color:var(--green-dark);margin:6px 0 10px}
+.sec-head p{color:var(--muted);font-size:.95rem}
+
+/* ---------- FEATURES ---------- */
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px}
+.f-card{background:#fff;border-radius:var(--radius);padding:26px 22px;box-shadow:var(--shadow);border-top:3px solid var(--sage);transition:.25s}
+.f-card:hover{transform:translateY(-5px);border-top-color:var(--gold)}
+.f-ico{width:52px;height:52px;border-radius:50%;background:var(--sand);display:grid;place-items:center;font-size:1.4rem;margin-bottom:14px}
+.f-card h3{font-size:1.05rem;color:var(--green-dark);margin-bottom:6px}
+.f-card p{font-size:.88rem;color:var(--muted)}
+
+/* ---------- GALLERY SLIDER ---------- */
+.slider{position:relative;max-width:900px;margin:0 auto;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#fff}
+.slides{display:flex;transition:transform .5s ease}
+.slides img{min-width:100%;height:440px;object-fit:cover}
+.s-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.9);border:0;width:42px;height:42px;border-radius:50%;cursor:pointer;font-size:1.2rem;color:var(--green-dark)}
+.s-prev{left:14px}.s-next{right:14px}
+.dots{display:flex;justify-content:center;gap:8px;margin-top:16px}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--sage);opacity:.4;cursor:pointer}
+.dot.active{opacity:1;background:var(--green-dark);width:24px;border-radius:6px}
+
+/* ---------- SHOP ---------- */
+.shop{background:#fff}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:26px}
+.p-card{background:var(--cream);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;position:relative;transition:.25s}
+.p-card:hover{transform:translateY(-6px)}
+.p-tag{position:absolute;top:14px;left:14px;background:var(--gold);color:#fff;font-size:.7rem;padding:4px 12px;border-radius:14px;font-weight:600;z-index:2}
+.p-tag.free{background:var(--green-dark)}
+.p-card img{height:230px;object-fit:cover;width:100%}
+.p-body{padding:20px;display:flex;flex-direction:column;flex:1}
+.p-body h3{font-size:1.1rem;color:var(--green-dark)}
+.p-body .size{font-size:.82rem;color:var(--muted);margin-bottom:10px}
+.price{display:flex;align-items:baseline;gap:9px;margin-bottom:6px}
+.price .now{font-size:1.5rem;font-weight:700;color:var(--green-dark)}
+.price .old{text-decoration:line-through;color:#a9a99e;font-size:.9rem}
+.save{font-size:.78rem;color:#c0392b;font-weight:600;margin-bottom:12px}
+.note{font-size:.8rem;color:var(--green);background:#eaf0e4;padding:6px 10px;border-radius:8px;margin-bottom:14px}
+.qty{display:flex;align-items:center;gap:0;border:1px solid var(--sage);border-radius:26px;overflow:hidden;width:fit-content;margin-bottom:14px}
+.qty button{border:0;background:transparent;width:36px;height:36px;cursor:pointer;font-size:1.1rem;color:var(--green-dark);font-family:inherit}
+.qty input{width:44px;text-align:center;border:0;background:transparent;font-family:inherit;font-size:.95rem}
+.p-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:auto}
+.p-actions .btn{flex:1;text-align:center;min-width:110px}
+.detail-link{display:block;text-align:center;margin-top:11px;font-size:.83rem;color:var(--muted);text-decoration:underline}
+.soon{filter:grayscale(.55);opacity:.9}
+.soon-badge{position:absolute;inset:0;background:rgba(47,87,65,.42);display:grid;place-items:center;color:#fff;font-weight:700;letter-spacing:3px;font-size:1.1rem;z-index:1}
+
+/* ---------- BEFORE / AFTER ---------- */
+.ba-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:24px}
+.ba-card{background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.ba-imgs{display:grid;grid-template-columns:1fr 1fr;gap:2px;position:relative}
+.ba-imgs figure{position:relative}
+.ba-imgs figcaption{position:absolute;bottom:8px;left:8px;background:rgba(47,87,65,.85);color:#fff;font-size:.7rem;padding:3px 10px;border-radius:12px}
+.ba-imgs img{height:210px;object-fit:cover;width:100%}
+.ba-card .cap{padding:14px 18px;font-size:.86rem;color:var(--muted)}
+.ba-card .cap b{color:var(--green-dark);display:block;font-size:.95rem}
+
+/* ---------- INGREDIENTS ---------- */
+.ing{background:linear-gradient(180deg,#eef1e6,#f7f1e3)}
+.ing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px}
+.ing-item{background:#fff;border-radius:14px;padding:20px;text-align:center;box-shadow:var(--shadow)}
+.ing-item img{width:66px;height:66px;border-radius:50%;object-fit:cover;margin:0 auto 12px}
+.ing-item h4{font-size:.95rem;color:var(--green-dark)}
+.ing-item p{font-size:.8rem;color:var(--muted);margin-top:4px}
+.certs{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:38px}
+.cert{background:#fff;border:1px dashed var(--sage);border-radius:14px;padding:16px 22px;text-align:center;min-width:170px}
+.cert b{display:block;color:var(--green-dark);font-size:.95rem}
+.cert small{color:var(--muted);font-size:.76rem}
+
+/* ---------- PARTNERS ---------- */
+.partner-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:26px}
+.pt-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
+.pt-thumbs{display:grid;grid-template-columns:2fr 1fr;gap:3px}
+.pt-thumbs img:first-child{height:220px;object-fit:cover}
+.pt-side{display:grid;gap:3px}
+.pt-side img{height:108.5px;object-fit:cover;width:100%}
+.pt-body{padding:20px;display:flex;flex-direction:column;flex:1}
+.pt-body h3{color:var(--green-dark);font-size:1.1rem}
+.pt-body ul{list-style:none;margin:10px 0 14px}
+.pt-body li{font-size:.85rem;color:var(--muted);padding-left:20px;position:relative}
+.pt-body li::before{content:"•";color:var(--gold);position:absolute;left:6px;font-weight:700}
+
+/* ---------- REVIEWS ---------- */
+.reviews{background:var(--green-dark);color:#f0eadb}
+.reviews .sec-head h2,.reviews .sec-head span{color:#fff}
+.reviews .sec-head p{color:#cfd8c6}
+.r-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:20px}
+.r-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:var(--radius);padding:22px}
+.stars{color:#f0c34e;margin-bottom:8px;font-size:.9rem}
+.r-card p{font-size:.9rem;color:#e5e0d2}
+.r-user{display:flex;align-items:center;gap:11px;margin-top:16px}
+.r-user img{width:40px;height:40px;border-radius:50%;object-fit:cover}
+.r-user b{font-size:.88rem;display:block}
+.r-user small{font-size:.74rem;color:#b9c4ae}
+
+/* ---------- FAQ ---------- */
+.faq-list{max-width:820px;margin:0 auto}
+.faq-item{background:#fff;border-radius:12px;margin-bottom:12px;box-shadow:var(--shadow);overflow:hidden}
+.faq-q{width:100%;text-align:left;padding:17px 22px;background:none;border:0;font-family:inherit;font-size:.96rem;font-weight:500;color:var(--green-dark);cursor:pointer;display:flex;justify-content:space-between;gap:12px}
+.faq-a{max-height:0;overflow:hidden;transition:.3s;padding:0 22px;color:var(--muted);font-size:.9rem}
+.faq-item.open .faq-a{max-height:280px;padding:0 22px 18px}
+.faq-item.open .faq-q span:last-child{transform:rotate(45deg)}
+.faq-q span:last-child{transition:.3s;font-size:1.3rem;color:var(--gold)}
+
+/* ---------- FOOTER ---------- */
+footer{background:#24382c;color:#cfd6c4;padding:54px 0 0;font-size:.88rem}
+.f-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:32px;padding-bottom:36px}
+footer h4{color:#fff;font-size:1rem;margin-bottom:14px}
+footer ul{list-style:none}
+footer li{margin-bottom:8px}
+footer a:hover{color:#fff;text-decoration:underline}
+.channels{display:flex;flex-wrap:wrap;gap:9px;margin-top:6px}
+.ch{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);padding:7px 14px;border-radius:20px;font-size:.8rem}
+.ch:hover{background:var(--gold);border-color:var(--gold);color:#fff}
+.f-bottom{border-top:1px solid rgba(255,255,255,.13);padding:16px 0;text-align:center;font-size:.78rem;color:#9fae94}
+
+/* ---------- MOBILE BAR ---------- */
+.mobile-bar{display:none;position:fixed;bottom:0;left:0;right:0;background:#fff;box-shadow:0 -3px 16px rgba(0,0,0,.12);padding:9px 14px;gap:10px;z-index:99}
+.mobile-bar .btn{flex:1;text-align:center}
+
+/* ---------- RESPONSIVE ---------- */
+@media(max-width:980px){
+  .hero .container{grid-template-columns:1fr;text-align:center}
+  .hero h1{font-size:2.1rem}
+  .hero-points{display:inline-block;text-align:left}
+  .f-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .burger{display:block}
+  .nav-links{position:fixed;top:64px;left:0;right:0;background:var(--cream);flex-direction:column;gap:0;padding:10px 20px 20px;transform:translateY(-140%);transition:.3s;box-shadow:var(--shadow)}
+  .nav-links.open{transform:translateY(0)}
+  .nav-links a{padding:12px 0;border-bottom:1px solid #e3dcc8}
+  .slides img{height:280px}
+  section{padding:46px 0}
+  .sec-head h2{font-size:1.55rem}
+  .mobile-bar{display:flex}
+  body{padding-bottom:64px}
+  .f-grid{grid-template-columns:1fr;text-align:center}
+  .channels{justify-content:center}
+  .topbar .container{justify-content:center;font-size:.72rem}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar"><div class="container">
+  <div><span class="th">🚚 ส่งฟรี! เมื่อสั่ง 4 ซองขึ้นไป หรือซื้อแบบกล่อง</span><span class="en">🚚 Free shipping on 4+ sachets or any box set</span></div>
+  <div><a href="tel:0800000000">📞 080-000-0000</a> &nbsp;|&nbsp; <a href="#footer"><span class="th">ติดต่อเรา</span><span class="en">Contact Us</span></a></div>
+</div></div>
+
+<!-- HEADER -->
+<header><div class="container"><nav>
+  <a href="#" class="logo">
+    <div class="logo-mark">🌿</div>
+    <div><b>TreeNourish</b><small class="th">ทรีเนอริชช์</small><small class="en">BOTANICAL SKINCARE</small></div>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="#product"><span class="th">ผลิตภัณฑ์</span><span class="en">Product</span></a>
+    <a href="#shop"><span class="th">สั่งซื้อ</span><span class="en">Shop</span></a>
+    <a href="#results"><span class="th">ผลลัพธ์</span><span class="en">Results</span></a>
+    <a href="#ingredients"><span class="th">ส่วนผสม</span><span class="en">Ingredients</span></a>
+    <a href="#partners"><span class="th">พันธมิตร</span><span class="en">Partners</span></a>
+    <a href="#reviews"><span class="th">รีวิว</span><span class="en">Reviews</span></a>
+    <a href="#faq"><span class="th">คำถามที่พบบ่อย</span><span class="en">FAQ</span></a>
+    <a href="#footer"><span class="th">ติดต่อเรา</span><span class="en">Contact Us</span></a>
+  </div>
+  <div class="nav-right">
+    <div class="lang">
+      <button class="active" onclick="setLang('th',this)">ไทย</button>
+      <button onclick="setLang('en',this)">EN</button>
+    </div>
+    <button class="icon-btn" title="My Account / Log in (OTP มือถือ)" onclick="alert('เข้าสู่ระบบด้วยเบอร์มือถือ (OTP)')">👤</button>
+    <button class="icon-btn" title="ตะกร้า">🛒<span class="cart-count" id="cartCount">0</span></button>
+    <button class="burger" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+  </div>
+</nav></div></header>
+
+<!-- HERO -->
+<div class="hero"><div class="container">
+  <div>
+    <span class="badge">NEW • THANAKA ACNE CLAY CREAM</span>
+    <h1 class="th">ทานาคา แอคเน่ เคลย์ ครีม</h1>
+    <h1 class="en">Thanaka Acne Clay Cream</h1>
+    <p class="sub th">สูตรอ่อนโยนสำหรับผิวที่มีปัญหาสิว • โคลนสีเนื้อทาได้ทั้งวัน • SPF 15</p>
+    <p class="sub en">Gentle formula for acne-prone skin • Tinted clay you can wear all day • SPF 15</p>
+    <ul class="hero-points">
+      <li><span class="th">ดูดซับความมัน ปกปิด สบายผิว ไม่อุดตัน</span><span class="en">Absorbs oil, covers blemishes, non-comedogenic</span></li>
+      <li><span class="th">เบลอรอยสิว ลดเลือนรอยดำ รอยแดง</span><span class="en">Blurs acne marks, fades dark spots &amp; redness</span></li>
+      <li><span class="th">ลดการสะสมของแบคทีเรีย P. Acne ทาได้ทุกวัน</span><span class="en">Reduces P. acnes buildup — safe for daily use</span></li>
+      <li><span class="th">กันแดดขั้นต้น SPF 15 • ล้างออกง่าย</span><span class="en">Primary sun protection SPF 15 • Easy to wash off</span></li>
+    </ul>
+    <a href="#shop" class="btn btn-primary"><span class="th">สั่งซื้อเลย</span><span class="en">Buy Now</span></a>
+    <a href="#product" class="btn btn-outline"><span class="th">ดูรายละเอียด</span><span class="en">Learn More</span></a>
+  </div>
+  <div class="hero-visual">
+    <img src="images/hero-box.jpg" alt="Thanaka Acne Clay Cream">
+    <div class="spf-tag">☀️ SPF 15 &nbsp;•&nbsp; 8 g. / 15 g.</div>
+  </div>
+</div></div>
+
+<!-- TRUST -->
+<div class="trust"><div class="container">
+  <div>✅ <span class="th">มี อย.</span><span class="en">FDA Registered</span></div>
+  <div>🧪 <span class="th">ผ่านการทดสอบการแพ้</span><span class="en">Hypoallergenic Tested</span></div>
+  <div>🚫 <span class="th">NO PARABEN / NO ALCOHOL</span><span class="en">No Paraben / No Alcohol</span></div>
+  <div>👩‍⚕️ <span class="th">ทดสอบโดยผู้เชี่ยวชาญด้านผิวหนัง</span><span class="en">Dermatologist Tested</span></div>
+</div></div>
+
+<!-- FEATURES -->
+<section id="product"><div class="container">
+  <div class="sec-head">
+    <span>PRODUCT HIGHLIGHTS</span>
+    <h2 class="th">จุดเด่นของผลิตภัณฑ์</h2>
+    <h2 class="en">Key Product Highlights</h2>
+    <p class="th">ส่วนผสมจากสารสกัดธรรมชาติหลายชนิด ทำงานร่วมกันเพื่อผิวหน้าที่แข็งแรงขึ้นทุกวัน</p>
+    <p class="en">A blend of natural botanical extracts working together for healthier skin every day.</p>
+  </div>
+  <div class="features">
+    <div class="f-card"><div class="f-ico">🪵</div>
+      <h3 class="th">ทานาคา &amp; เคโอลิน เคลย์</h3><h3 class="en">Thanaka &amp; Kaolin Clay</h3>
+      <p class="th">กรองรังสียูวีโดยธรรมชาติ ดูดซับความมันส่วนเกินระหว่างวัน ให้ผิวแมตต์แต่ไม่แห้งกร้าน</p>
+      <p class="en">Natural UV filtering and all-day oil absorption for a matte — never dry — finish.</p></div>
+    <div class="f-card"><div class="f-ico">🌿</div>
+      <h3 class="th">ว่านหางจระเข้ &amp; Cica</h3><h3 class="en">Aloe Vera &amp; Cica</h3>
+      <p class="th">ปลอบประโลมผิวจากการอักเสบ ลดรอยแดง และช่วยบำรุงผิวให้ชุ่มชื้น</p>
+      <p class="en">Soothes inflammation, calms redness, and deeply nourishes the skin.</p></div>
+    <div class="f-card"><div class="f-ico">🍇</div>
+      <h3 class="th">เปลือกมังคุด &amp; Aczero</h3><h3 class="en">Mangosteen Peel &amp; Aczero</h3>
+      <p class="th">สารสกัด 7 ชนิด ช่วยลดเชื้อแบคทีเรียที่ทำให้เกิดสิว สิวแห้งเร็ว ลดโอกาสเกิดสิวใหม่</p>
+      <p class="en">7-plant complex that targets acne bacteria, dries pimples faster, prevents new breakouts.</p></div>
+    <div class="f-card"><div class="f-ico">💧</div>
+      <h3 class="th">Niacinamide</h3><h3 class="en">Niacinamide</h3>
+      <p class="th">ช่วยลดเลือนรอยแดงและรอยดำ พร้อมปรับผิวให้ดูกระจ่างใสอย่างเป็นธรรมชาติ</p>
+      <p class="en">Fades post-acne marks and evens tone for naturally brighter-looking skin.</p></div>
+  </div>
+</div></section>
+
+<!-- GALLERY -->
+<section style="background:#fff"><div class="container">
+  <div class="sec-head"><span>GALLERY</span>
+    <h2 class="th">ภาพผลิตภัณฑ์</h2><h2 class="en">Product Gallery</h2></div>
+  <div class="slider">
+    <div class="slides" id="slides">
+      <img src="images/g1.jpg" alt="Packaging front">
+      <img src="images/g2.jpg" alt="Sachet">
+      <img src="images/g3.jpg" alt="Texture">
+      <img src="images/g4.jpg" alt="Ingredients">
+      <img src="images/g5.jpg" alt="Model applying">
+    </div>
+    <button class="s-btn s-prev" onclick="move(-1)">‹</button>
+    <button class="s-btn s-next" onclick="move(1)">›</button>
+  </div>
+  <div class="dots" id="dots"></div>
+</div></section>
+
+<!-- SHOP -->
+<section class="shop" id="shop"><div class="container">
+  <div class="sec-head"><span>SHOP</span>
+    <h2 class="th">เลือกแบบที่ใช่สำหรับคุณ</h2><h2 class="en">Choose Your Size</h2>
+    <p class="th">เลือกจำนวน → หยิบใส่ตะกร้า หรือกด “ซื้อเลย” เพื่อชำระเงินทันที</p>
+    <p class="en">Select quantity → Add to cart, or hit “Buy Now” for instant checkout.</p></div>
+
+  <div class="products">
+    <!-- SACHET -->
+    <div class="p-card">
+      <span class="p-tag">BEST SELLER</span>
+      <img src="images/sachet.jpg" alt="Sachet 8g">
+      <div class="p-body">
+        <h3 class="th">แบบซอง 8 กรัม</h3><h3 class="en">Sachet 8 g.</h3>
+        <div class="size th">ทานาคา แอคเน่ เคลย์ ครีม • 8 g.</div>
+        <div class="size en">Thanaka Acne Clay Cream • 8 g.</div>
+        <div class="price"><span class="now">฿59</span><span class="old">฿69</span></div>
+        <div class="note"><span class="th">🚚 สั่ง 4 ซองขึ้นไป ส่งฟรี!</span><span class="en">🚚 Free shipping on 4+ sachets!</span></div>
+        <div class="qty"><button onclick="q(this,-1)">−</button><input value="1" readonly><button onclick="q(this,1)">+</button></div>
+        <div class="p-actions">
+          <button class="btn btn-outline btn-sm" onclick="addCart()"><span class="th">หยิบใส่ตะกร้า</span><span class="en">Add to Cart</span></button>
+          <button class="btn btn-primary btn-sm"><span class="th">ซื้อเลย</span><span class="en">Buy Now</span></button>
+        </div>
+        <a href="#" class="detail-link"><span class="th">ดูรายละเอียดเพิ่มเติม</span><span class="en">View full details</span></a>
+      </div>
+    </div>
+
+    <!-- BOX -->
+    <div class="p-card">
+      <span class="p-tag free"><span class="th">คุ้มที่สุด • ส่งฟรี</span><span class="en">BEST VALUE • FREE SHIP</span></span>
+      <img src="images/box.jpg" alt="Box of 6 sachets">
+      <div class="p-body">
+        <h3 class="th">แบบกล่อง (6 ซอง)</h3><h3 class="en">Box Set (6 Sachets)</h3>
+        <div class="size th">6 × 8 กรัม รวม 48 กรัม</div>
+        <div class="size en">6 × 8 g. — 48 g. total</div>
+        <div class="price"><span class="now">฿310</span><span class="old">฿354</span></div>
+        <div class="save"><span class="th">ประหยัด ฿44 (12%)</span><span class="en">Save ฿44 (12%)</span></div>
+        <div class="note"><span class="th">🚚 ส่งฟรีทุกกล่อง</span><span class="en">🚚 Free shipping on every box</span></div>
+        <div class="qty"><button onclick="q(this,-1)">−</button><input value="1" readonly><button onclick="q(this,1)">+</button></div>
+        <div class="p-actions">
+          <button class="btn btn-outline btn-sm" onclick="addCart()"><span class="th">หยิบใส่ตะกร้า</span><span class="en">Add to Cart</span></button>
+          <button class="btn btn-primary btn-sm"><span class="th">ซื้อเลย</span><span class="en">Buy Now</span></button>
+        </div>
+        <a href="#" class="detail-link"><span class="th">ดูรายละเอียดเพิ่มเติม</span><span class="en">View full details</span></a>
+      </div>
+    </div>
+
+    <!-- TUBE -->
+    <div class="p-card soon">
+      <div style="position:relative"><div class="soon-badge">COMING SOON</div>
+        <img src="images/tube.jpg" alt="Tube 15g"></div>
+      <div class="p-body">
+        <h3 class="th">แบบหลอด 15 กรัม</h3><h3 class="en">Tube 15 g.</h3>
+        <div class="size th">ขนาดพกพา ใช้ได้นานขึ้น</div>
+        <div class="size en">Travel-friendly, longer-lasting</div>
+        <div class="price"><span class="now" style="font-size:1.15rem;color:var(--muted)"><span class="th">ยังไม่เปิดขาย</span><span class="en">Not yet available</span></span></div>
+        <div class="note"><span class="th">🔔 ลงทะเบียนรับแจ้งเตือนเมื่อวางจำหน่าย</span><span class="en">🔔 Get notified when it launches</span></div>
+        <div class="p-actions">
+          <button class="btn btn-outline btn-sm" style="flex:1" onclick="alert('เราจะแจ้งเตือนคุณทันทีที่เปิดขาย!')"><span class="th">แจ้งเตือนฉัน</span><span class="en">Notify Me</span></button>
+        </div>
+        <a href="#" class="detail-link"><span class="th">ดูรายละเอียดเพิ่มเติม</span><span class="en">View full details</span></a>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- RESULTS -->
+<section id="results"><div class="container">
+  <div class="sec-head"><span>REAL RESULTS</span>
+    <h2 class="th">ก่อน &amp; หลังใช้ครีม</h2><h2 class="en">Before &amp; After</h2>
+    <p class="th">*ผลลัพธ์ขึ้นอยู่กับสภาพผิวของแต่ละบุคคล</p>
+    <p class="en">*Results may vary by individual skin condition.</p></div>
+  <div class="ba-grid">
+    <div class="ba-card">
+      <div class="ba-imgs">
+        <figure><img src="images/ba1-before.jpg" alt="before"><figcaption>BEFORE</figcaption></figure>
+        <figure><img src="images/ba1-after.jpg" alt="after"><figcaption>AFTER</figcaption></figure>
+      </div>
+      <div class="cap"><b class="th">คุณเอ๋ • 7 วัน</b><b class="en">Ae • 7 days</b>
+        <span class="th">สิวอักเสบยุบลง หน้าดูเรียบเนียนขึ้น มันน้อยลงชัดเจน</span>
+        <span class="en">Inflamed pimples calmed, smoother texture, visibly less shine.</span></div>
+    </div>
+    <div class="ba-card">
+      <div class="ba-imgs">
+        <figure><img src="images/ba2-before.jpg" alt="before"><figcaption>BEFORE</figcaption></figure>
+        <figure><img src="images/ba2-after.jpg" alt="after"><figcaption>AFTER</figcaption></figure>
+      </div>
+      <div class="cap"><b class="th">คุณมิ้นท์ • 14 วัน</b><b class="en">Mint • 14 days</b>
+        <span class="th">รอยดำจากสิวจางลง สีผิวสม่ำเสมอขึ้น</span>
+        <span class="en">Post-acne marks faded, skin tone looks more even.</span></div>
+    </div>
+    <div class="ba-card">
+      <div class="ba-imgs">
+        <figure><img src="images/ba3-before.jpg" alt="before"><figcaption>BEFORE</figcaption></figure>
+        <figure><img src="images/ba3-after.jpg" alt="after"><figcaption>AFTER</figcaption></figure>
+      </div>
+      <div class="cap"><b class="th">คุณโบว์ • 30 วัน</b><b class="en">Bow • 30 days</b>
+        <span class="th">สิวใหม่เกิดน้อยลง ผิวแข็งแรงขึ้น ไม่อุดตัน</span>
+        <span class="en">Fewer new breakouts, healthier and clearer-looking skin.</span></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- INGREDIENTS -->
+<section class="ing" id="ingredients"><div class="container">
+  <div class="sec-head"><span>INGREDIENTS</span>
+    <h2 class="th">ส่วนผสมสำคัญ</h2><h2 class="en">Key Ingredients</h2></div>
+  <div class="ing-grid">
+    <div class="ing-item"><img src="images/i-thanaka.jpg" alt=""><h4>Thanaka Extract</h4><p class="th">กรองรังสี ลดมัน</p><p class="en">UV filter, oil control</p></div>
+    <div class="ing-item"><img src="images/i-kaolin.jpg" alt=""><h4>Kaolin Clay</h4><p class="th">ดูดซับความมัน</p><p class="en">Absorbs excess oil</p></div>
+    <div class="ing-item"><img src="images/i-aloe.jpg" alt=""><h4>Aloe Vera</h4><p class="th">ปลอบประโลมผิว</p><p class="en">Soothing &amp; hydrating</p></div>
+    <div class="ing-item"><img src="images/i-mango.jpg" alt=""><h4>Mangosteen Peel</h4><p class="th">ลดเชื้อสิว</p><p class="en">Anti-acne bacteria</p></div>
+    <div class="ing-item"><img src="images/i-aczero.jpg" alt=""><h4>Aczero (7 Plants)</h4><p class="th">ลดการเกิดสิวใหม่</p><p class="en">Prevents new breakouts</p></div>
+    <div class="ing-item"><img src="images/i-cica.jpg" alt=""><h4>Cica</h4><p class="th">ลดการอักเสบ</p><p class="en">Calms inflammation</p></div>
+    <div class="ing-item"><img src="images/i-niacin.jpg" alt=""><h4>Niacinamide</h4><p class="th">ลดรอยดำ ผิวกระจ่างใส</p><p class="en">Fades marks, brightens</p></div>
+    <div class="ing-item"><img src="images/i-spf.jpg" alt=""><h4>SPF 15</h4><p class="th">กันแดดขั้นต้น</p><p class="en">Primary sun defense</p></div>
+  </div>
+  <div class="certs">
+    <div class="cert"><b>อย. / Thai FDA</b><small class="th">เลขที่จดแจ้ง 10-1-xxxxxxxxx</small><small class="en">Notification No. 10-1-xxxxxxxxx</small></div>
+    <div class="cert"><b class="th">ผ่านการทดสอบการแพ้</b><b class="en">Hypoallergenic Tested</b><small class="th">โดยสถาบันอิสระ</small><small class="en">By independent lab</small></div>
+    <div class="cert"><b>Dermatologist Tested</b><small class="th">ผู้เชี่ยวชาญด้านผิวหนัง</small><small class="en">Skin specialist approved</small></div>
+    <div class="cert"><b>FREE FROM</b><small class="th">แอลกอฮอล์ • พาราเบน • น้ำหอม • มิเนอรัลออยล์</small><small class="en">Alcohol • Paraben • Fragrance • Mineral oil</small></div>
+  </div>
+</div></section>
+
+<!-- PARTNERS -->
+<section id="partners" style="background:#fff"><div class="container">
+  <div class="sec-head"><span>PARTNER PRODUCTS</span>
+    <h2 class="th">ผลิตภัณฑ์จากพันธมิตร</h2><h2 class="en">Products from Our Partners</h2></div>
+  <div class="partner-grid">
+    <div class="pt-card">
+      <div class="pt-thumbs"><img src="images/oil1.jpg" alt="">
+        <div class="pt-side"><img src="images/oil2.jpg" alt=""><img src="images/oil3.jpg" alt=""></div></div>
+      <div class="pt-body">
+        <h3 class="th">น้ำมันนวดสมุนไพร</h3><h3 class="en">Herbal Massage Oil</h3>
+        <ul>
+          <li><span class="th">สกัดจากสมุนไพรไทยแท้ 100%</span><span class="en">100% authentic Thai herbal extracts</span></li>
+          <li><span class="th">ผ่อนคลายกล้ามเนื้อ ลดอาการปวดเมื่อย</span><span class="en">Relaxes muscles, relieves tension</span></li>
+          <li><span class="th">ซึมไว ไม่เหนียวเหนอะหนะ</span><span class="en">Fast-absorbing, non-greasy</span></li>
+        </ul>
+        <div class="price"><span class="now">฿249</span><span class="old">฿299</span></div>
+        <div class="qty"><button onclick="q(this,-1)">−</button><input value="1" readonly><button onclick="q(this,1)">+</button></div>
+        <div class="p-actions">
+          <button class="btn btn-outline btn-sm" onclick="addCart()"><span class="th">หยิบใส่ตะกร้า</span><span class="en">Add to Cart</span></button>
+          <button class="btn btn-primary btn-sm"><span class="th">สั่งเลย</span><span class="en">Order Now</span></button>
+        </div>
+        <a href="#" class="detail-link"><span class="th">ดูรายละเอียดเพิ่มเติม</span><span class="en">View full details</span></a>
+      </div>
+    </div>
+
+    <div class="pt-card">
+      <div class="pt-thumbs"><img src="images/rice1.jpg" alt="">
+        <div class="pt-side"><img src="images/rice2.jpg" alt=""><img src="images/rice3.jpg" alt=""></div></div>
+      <div class="pt-body">
+        <h3 class="th">ข้าวชงเพื่อสุขภาพ</h3><h3 class="en">Instant Rice Drink</h3>
+        <ul>
+          <li><span class="th">ข้าวกล้องงอก ธัญพืชรวม ไม่ใส่น้ำตาลทราย</span><span class="en">Germinated brown rice &amp; grains, no added sugar</span></li>
+          <li><span class="th">ใยอาหารสูง อิ่มนาน ช่วยระบบขับถ่าย</span><span class="en">High fiber, keeps you full, aids digestion</span></li>
+          <li><span class="th">ชงง่ายใน 30 วินาที พกพาสะดวก</span><span class="en">Ready in 30 seconds, travel-friendly</span></li>
+        </ul>
+        <div class="price"><span class="now">฿189</span><span class="old">฿220</span></div>
+        <div class="qty"><button onclick="q(this,-1)">−</button><input value="1" readonly><button onclick="q(this,1)">+</button></div>
+        <div class="p-actions">
+          <button class="btn btn-outline btn-sm" onclick="addCart()"><span class="th">หยิบใส่ตะกร้า</span><span class="en">Add to Cart</span></button>
+          <button class="btn btn-primary btn-sm"><span class="th">สั่งเลย</span><span class="en">Order Now</span></button>
+        </div>
+        <a href="#" class="detail-link"><span class="th">ดูรายละเอียดเพิ่มเติม</span><span class="en">View full details</span></a>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews"><div class="container">
+  <div class="sec-head"><span>CUSTOMER REVIEWS</span>
+    <h2 class="th">รีวิวจากผู้ใช้จริง</h2><h2 class="en">Real Customer Reviews</h2>
+    <p>⭐ 4.8 / 5 <span class="th">จาก 1,240 รีวิว</span><span class="en">from 1,240 reviews</span></p></div>
+  <div class="r-grid">
+    <div class="r-card"><div class="stars">★★★★★</div>
+      <p class="th">“ทาแล้วหน้าไม่มันเลยทั้งวัน ปกปิดรอยสิวได้ดีมาก สีเนื้อกลืนกับผิวสุดๆ”</p>
+      <p class="en">“My face stays matte all day and it covers acne marks so well — the tint blends perfectly.”</p>
+      <div class="r-user"><img src="images/u1.jpg" alt=""><div><b>Nong P.</b><small class="th">ซื้อแบบกล่อง 6 ซอง</small><small class="en">Bought the 6-sachet box</small></div></div></div>
+    <div class="r-card"><div class="stars">★★★★★</div>
+      <p class="th">“สิวอักเสบยุบเร็วขึ้นจริง ไม่แสบ ไม่ลอก ใช้ได้ทุกวันแบบสบายใจ”</p>
+      <p class="en">“Inflamed pimples calm down fast. No stinging, no peeling — safe for daily use.”</p>
+      <div class="r-user"><img src="images/u2.jpg" alt=""><div><b>Ploy S.</b><small class="th">ผิวมัน เป็นสิวง่าย</small><small class="en">Oily, acne-prone skin</small></div></div></div>
+    <div class="r-card"><div class="stars">★★★★☆</div>
+      <p class="th">“ล้างออกง่าย ไม่อุดตัน ชอบที่มี SPF ในตัว ออกไปข้างนอกได้เลย”</p>
+      <p class="en">“Washes off easily, doesn’t clog pores, and I love the built-in SPF for going out.”</p>
+      <div class="r-user"><img src="images/u3.jpg" alt=""><div><b>Kwan T.</b><small class="th">ลูกค้าประจำ</small><small class="en">Repeat customer</small></div></div></div>
+  </div>
+</div></section>
+
+<!-- FAQ -->
+<section id="faq"><div class="container">
+  <div class="sec-head"><span>FAQ</span>
+    <h2 class="th">คำถามที่พบบ่อย</h2><h2 class="en">Frequently Asked Questions</h2></div>
+  <div class="faq-list">
+    <div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+      <span><span class="th">ใช้อย่างไร ใช้บ่อยแค่ไหน?</span><span class="en">How and how often should I use it?</span></span><span>+</span></button>
+      <div class="faq-a"><span class="th">ล้างหน้าให้สะอาด ทาบางๆ เฉพาะจุดหรือทั้งใบหน้า เช้า–เย็น ใช้ได้ทุกวัน ล้างออกด้วยคลีนเซอร์ตามปกติ</span>
+      <span class="en">Cleanse first, then apply a thin layer on spots or the whole face, morning and evening. Safe for daily use — remove with your usual cleanser.</span></div></div>
+
+    <div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+      <span><span class="th">ทาแล้วแต่งหน้าทับได้ไหม?</span><span class="en">Can I apply makeup over it?</span></span><span>+</span></button>
+      <div class="faq-a"><span class="th">ได้ครับ เนื้อครีมสีเนื้อทำหน้าที่เหมือนไพรเมอร์ ช่วยให้เมคอัพติดทนและลดความมันระหว่างวัน</span>
+      <span class="en">Yes. The tinted texture works like a primer, helping makeup last longer while controlling shine.</span></div></div>
+
+    <div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+      <span><span class="th">ผิวแพ้ง่ายใช้ได้ไหม?</span><span class="en">Is it suitable for sensitive skin?</span></span><span>+</span></button>
+      <div class="faq-a"><span class="th">สูตรอ่อนโยน ไม่มีแอลกอฮอล์ พาราเบน น้ำหอม และผ่านการทดสอบการแพ้ แนะนำให้ทดสอบที่ท้องแขนก่อนใช้ครั้งแรก</span>
+      <span class="en">It’s a gentle, alcohol-, paraben- and fragrance-free formula that is hypoallergenic tested. We still recommend a patch test before first use.</span></div></div>
+
+    <div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+      <span><span class="th">เงื่อนไขส่งฟรีเป็นอย่างไร?</span><span class="en">What are the free shipping conditions?</span></span><span>+</span></button>
+      <div class="faq-a"><span class="th">ซองขนาด 8 กรัม สั่ง 4 ซองขึ้นไป ส่งฟรี / แบบกล่อง 6 ซอง ส่งฟรีทุกกล่อง</span>
+      <span class="en">Free shipping on orders of 4+ sachets (8 g), and on every 6-sachet box set.</span></div></div>
+
+    <div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+      <span><span class="th">แบบหลอด 15 กรัม เปิดขายเมื่อไหร่?</span><span class="en">When will the 15 g tube be available?</span></span><span>+</span></button>
+      <div class="faq-a"><span class="th">อยู่ระหว่างเตรียมวางจำหน่าย กด “แจ้งเตือนฉัน” ที่หน้าสินค้าเพื่อรับข่าวสารก่อนใคร</span>
+      <span class="en">It’s coming soon — tap “Notify Me” on the product card to be the first to know.</span></div></div>
+
+    <div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+      <span><span class="th">จัดส่งกี่วัน และมีช่องทางชำระเงินอะไรบ้าง?</span><span class="en">Delivery time and payment options?</span></span><span>+</span></button>
+      <div class="faq-a"><span class="th">จัดส่งภายใน 1–3 วันทำการ รองรับโอนธนาคาร, พร้อมเพย์, บัตรเครดิต และเก็บเงินปลายทาง (COD)</span>
+      <span class="en">Delivery in 1–3 business days. We accept bank transfer, PromptPay, credit card and cash on delivery (COD).</span></div></div>
+  </div>
+</div></section>
+
+<!-- FOOTER -->
+<footer id="footer"><div class="container">
+  <div class="f-grid">
+    <div>
+      <h4>TreeNourish <span class="th">ทรีเนอริชช์</span></h4>
+      <p class="th">Botanical Skincare • Herbal Care<br>ผลิตภัณฑ์ดูแลผิวจากธรรมชาติ เพื่อผิวที่แข็งแรงอย่างยั่งยืน</p>
+      <p class="en">Botanical Skincare • Herbal Care<br>Nature-powered skincare for lasting, healthy skin.</p>
+      <div class="channels">
+        <a class="ch" href="#">Facebook</a><a class="ch" href="#">LINE OA</a>
+        <a class="ch" href="#">Instagram</a><a class="ch" href="#">TikTok</a>
+      </div>
+    </div>
+    <div>
+      <h4 class="th">ติดต่อเรา</h4><h4 class="en">Contact Us</h4>
+      <ul>
+        <li>📞 <a href="tel:0800000000">080-000-0000</a></li>
+        <li>✉️ <a href="mailto:info@treenourish-thailand.com">info@treenourish-thailand.com</a></li>
+        <li>💬 LINE: @treenourish</li>
+        <li class="th">📍 กรุงเทพมหานคร ประเทศไทย</li>
+        <li class="en">📍 Bangkok, Thailand</li>
+        <li class="th">🕘 จ.–ส. 09:00–18:00 น.</li>
+        <li class="en">🕘 Mon–Sat 09:00–18:00</li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="th">เมนูลัด</h4><h4 class="en">Quick Links</h4>
+      <ul>
+        <li><a href="#product"><span class="th">ผลิตภัณฑ์</span><span class="en">Product</span></a></li>
+        <li><a href="#shop"><span class="th">สั่งซื้อ</span><span class="en">Shop</span></a></li>
+        <li><a href="#results"><span class="th">ผลลัพธ์</span><span class="en">Results</span></a></li>
+        <li><a href="#faq"><span class="th">คำถามที่พบบ่อย</span><span class="en">FAQ</span></a></li>
+        <li><a href="#"><span class="th">นโยบายความเป็นส่วนตัว</span><span class="en">Privacy Policy</span></a></li>
+        <li><a href="#"><span class="th">นโยบายคืนสินค้า</span><span class="en">Return Policy</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="th">ช่องทางการขาย</h4><h4 class="en">Where to Buy</h4>
+      <div class="channels">
+        <a class="ch" href="#">🛍️ Shopee</a>
+        <a class="ch" href="#">🛒 Lazada</a>
+        <a class="ch" href="#">🏪 ThaiMart</a>
+        <a class="ch" href="https://linktr.ee/treenourish" target="_blank">🔗 linktr.ee/treenourish</a>
+      </div>
+      <p style="margin-top:14px;font-size:.8rem" class="th">✅ มี อย. • ผ่านการทดสอบการแพ้ • No Paraben • No Alcohol</p>
+      <p style="margin-top:14px;font-size:.8rem" class="en">✅ Thai FDA • Hypoallergenic Tested • No Paraben • No Alcohol</p>
+    </div>
+  </div>
+</div>
+<div class="f-bottom">© 2026 TreeNourish Thailand — treenourish-thailand.com <span class="th">| สงวนลิขสิทธิ์</span><span class="en">| All rights reserved</span></div>
+</footer>
+
+<!-- MOBILE STICKY BAR -->
+<div class="mobile-bar">
+  <a href="#shop" class="btn btn-outline btn-sm"><span class="th">ดูสินค้า</span><span class="en">View Products</span></a>
+  <a href="#shop" class="btn btn-primary btn-sm"><span class="th">🛒 สั่งซื้อเลย ฿59</span><span class="en">🛒 Buy Now ฿59</span></a>
+</div>
+
+<script>
+/* LANGUAGE */
+function setLang(l,btn){
+  document.documentElement.setAttribute('data-lang',l);
+  document.documentElement.lang = l;
+  document.querySelectorAll('.lang button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+document.documentElement.setAttribute('data-lang','th');
+
+/* SLIDER */
+let idx=0;
+const slides=document.getElementById('slides');
+const total=slides.children.length;
+const dots=document.getElementById('dots');
+for(let i=0;i<total;i++){
+  const d=document.createElement('div');
+  d.className='dot'+(i===0?' active':'');
+  d.onclick=()=>go(i); dots.appendChild(d);
+}
+function go(i){idx=(i+total)%total;slides.style.transform=`translateX(-${idx*100}%)`;
+  [...dots.children].forEach((d,j)=>d.classList.toggle('active',j===idx));}
+function move(n){go(idx+n)}
+setInterval(()=>move(1),5000);
+
+/* QUANTITY */
+function q(btn,n){
+  const input=btn.parentElement.querySelector('input');
+  input.value=Math.max(1,parseInt(input.value)+n);
+}
+/* CART */
+let cart=0;
+function addCart(){cart++;document.getElementById('cartCount').textContent=cart;}
+
+/* CLOSE MOBILE MENU ON CLICK */
+document.querySelectorAll('#navLinks a').forEach(a=>a.onclick=()=>document.getElementById('navLinks').classList.remove('open'));
+</script>
+</body>
+</html>
