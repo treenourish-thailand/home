@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TreeNourish — ระบบแก้ไขเนื้อหาเว็บไซต์</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600&family=Sarabun:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --forest:#2C4A3E; --forest-deep:#1C3129; --forest-soft:#6B8574;
+  --cream:#F9F6EE; --sand:#EFE2CC; --gold:#B18F52; --gold-soft:#D9C49A;
+  --blush:#EBC9C4; --blush-deep:#C25B50; --ink:#26302B; --ink-soft:#5B6660; --white:#fff;
+  --display:'Prompt',system-ui,sans-serif; --body:'Sarabun','Prompt',system-ui,sans-serif;
+  --r:12px; --r-lg:18px;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+h1,h2,h3,h4{font-family:var(--display);margin:0;font-weight:600;line-height:1.3}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+input,textarea,select{font:inherit;color:inherit}
+a{color:var(--forest)}
+:focus-visible{outline:2.5px solid var(--gold);outline-offset:2px}
+
+.top{position:sticky;top:0;z-index:20;background:var(--forest-deep);color:var(--cream);padding:12px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.top h1{font-size:17px;letter-spacing:.01em}
+.top .tag{font-size:12px;background:rgba(217,196,154,.18);border:1px solid rgba(217,196,154,.35);border-radius:99px;padding:3px 11px;color:var(--gold-soft)}
+.top .spacer{margin-left:auto}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-weight:500;font-size:14px;padding:10px 18px;border-radius:99px;transition:background .18s,transform .15s}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--gold);color:#241a05}
+.btn-primary:hover{background:#c69e5d}
+.btn-ghost{border:1.3px solid rgba(217,196,154,.45);color:var(--cream)}
+.btn-ghost:hover{background:rgba(217,196,154,.14)}
+.btn-sm{padding:6px 13px;font-size:13px}
+.btn-danger{border:1.3px solid var(--blush);color:var(--blush-deep);background:#fff}
+.btn-danger:hover{background:#fdf1ef}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+
+.wrap{max-width:1180px;margin:0 auto;padding:22px 20px 80px}
+.intro{background:var(--white);border:1px solid rgba(177,143,82,.35);border-radius:var(--r-lg);padding:26px}
+.intro h2{font-size:20px;color:var(--forest)}
+.intro p{margin:10px 0 0;color:var(--ink-soft);max-width:70ch}
+.drop{margin-top:20px;border:2px dashed rgba(177,143,82,.6);border-radius:var(--r-lg);padding:34px 20px;text-align:center;background:var(--cream);transition:background .2s,border-color .2s}
+.drop.over{background:#F2EADB;border-color:var(--forest)}
+.drop p{margin:8px 0 0;font-size:14px;color:var(--ink-soft)}
+.steps{margin:18px 0 0;padding-left:20px;color:var(--ink-soft);font-size:14.5px}
+.steps li{margin-bottom:5px}
+
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;position:sticky;top:54px;background:var(--cream);padding:12px 0;z-index:10;border-bottom:1px solid rgba(177,143,82,.28)}
+.tabs button{font-family:var(--display);font-size:14px;padding:8px 15px;border-radius:99px;color:var(--forest-soft);border:1.3px solid transparent}
+.tabs button:hover{background:rgba(44,74,62,.07)}
+.tabs button[aria-selected="true"]{background:var(--forest);color:var(--cream)}
+.tabs .count{font-size:11.5px;opacity:.7;margin-left:5px}
+
+.panel{display:none}
+.panel.on{display:block}
+.hint{background:#F3EEE1;border-left:3px solid var(--gold);border-radius:0 var(--r) var(--r) 0;padding:12px 16px;font-size:13.5px;color:var(--ink-soft);margin-bottom:18px}
+
+.card{background:var(--white);border:1px solid rgba(177,143,82,.3);border-radius:var(--r-lg);margin-bottom:14px;overflow:hidden}
+.card>summary{list-style:none;cursor:pointer;padding:14px 18px;display:flex;align-items:center;gap:12px;font-family:var(--display);font-weight:500;color:var(--forest);background:#FCFAF4}
+.card>summary::-webkit-details-marker{display:none}
+.card>summary::after{content:"";margin-left:auto;width:9px;height:9px;border-right:1.8px solid var(--gold);border-bottom:1.8px solid var(--gold);transform:rotate(45deg);transition:transform .2s}
+.card[open]>summary::after{transform:rotate(-135deg)}
+.card>summary .badge{font-size:11.5px;font-weight:500;background:var(--sand);color:#5A4517;border-radius:99px;padding:2px 10px}
+.card .body{padding:4px 18px 20px;border-top:1px solid rgba(177,143,82,.25)}
+
+.field{margin-top:14px}
+.field>label{display:block;font-family:var(--display);font-size:12.5px;font-weight:500;color:var(--forest-soft);margin-bottom:5px}
+.field .lang-tag{display:inline-block;font-size:10.5px;background:var(--sand);color:#5A4517;border-radius:4px;padding:1px 6px;margin-right:6px;vertical-align:1px}
+input[type="text"],input[type="number"],textarea{width:100%;border:1.3px solid rgba(44,74,62,.24);border-radius:10px;padding:9px 12px;background:var(--white);font-size:14.5px;line-height:1.55;resize:vertical}
+input[type="text"]:focus,textarea:focus{border-color:var(--forest);outline:none}
+textarea{min-height:66px}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:720px){.pair{grid-template-columns:1fr}}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+
+.imgbox{display:flex;gap:14px;align-items:flex-start;border:1px solid rgba(177,143,82,.3);border-radius:var(--r);padding:12px;background:#FCFAF4;margin-top:10px}
+.imgbox .thumb{width:92px;height:92px;flex:0 0 auto;border-radius:10px;background:var(--sand);display:grid;place-items:center;overflow:hidden}
+.imgbox .thumb img{max-width:100%;max-height:100%;object-fit:contain}
+.imgbox .meta{flex:1;min-width:0}
+.imgbox .meta .name{font-family:var(--display);font-size:13.5px;color:var(--forest)}
+.imgbox .meta .size{font-size:12px;color:var(--ink-soft);margin-top:2px}
+.imgbox .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}
+.filebtn{position:relative;overflow:hidden;display:inline-flex}
+.filebtn input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%}
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:10px}
+.gitem{border:1px solid rgba(177,143,82,.3);border-radius:10px;padding:8px;background:#FCFAF4;text-align:center}
+.gitem img{width:100%;height:96px;object-fit:contain}
+.gitem .gacts{display:flex;gap:6px;justify-content:center;margin-top:6px}
+.gitem button{font-size:11.5px;color:var(--ink-soft);border:1px solid rgba(44,74,62,.2);border-radius:99px;padding:3px 9px}
+.gitem button:hover{background:#F2EADB}
+
+.listitem{border:1px solid rgba(177,143,82,.28);border-radius:var(--r);padding:14px 16px;margin-top:12px;background:#FCFAF4}
+.listitem .lhead{display:flex;align-items:center;gap:10px;margin-bottom:2px}
+.listitem .lhead strong{font-family:var(--display);font-size:14px;color:var(--forest)}
+.listitem .lhead .spacer{margin-left:auto}
+.addrow{margin-top:14px}
+
+.savebar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(28,49,41,.97);color:var(--cream);padding:12px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:0 -10px 30px -18px rgba(0,0,0,.8)}
+.savebar .status{font-size:13px;color:var(--gold-soft)}
+.savebar .spacer{margin-left:auto}
+.hidden{display:none!important}
+.toast{position:fixed;left:50%;bottom:76px;transform:translate(-50%,14px);background:var(--forest-deep);color:var(--cream);border:1px solid rgba(217,196,154,.4);padding:11px 20px;border-radius:99px;font-family:var(--display);font-size:14px;z-index:40;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;max-width:92vw;text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.sec-title{font-family:var(--display);font-size:13px;font-weight:600;color:var(--gold);letter-spacing:.02em;margin:22px 0 8px}
+.sec-title:first-child{margin-top:0}
+</style>
+</head>
+<body>
+<header class="top">
+  <h1>TreeNourish · ระบบแก้ไขเนื้อหา</h1>
+  <span class="tag">Admin</span>
+  <span class="spacer"></span>
+  <button class="btn btn-ghost btn-sm" id="btn-reload">โหลดไฟล์ใหม่</button>
+</header>
+
+<main class="wrap">
+  <section class="intro" id="loader">
+    <h2>เริ่มต้นใช้งาน</h2>
+    <p>หน้านี้ใช้แก้ไขข้อความและรูปภาพของหน้าเว็บ <strong>treenourish-landing.html</strong> โดยไม่ต้องเขียนโค้ด ทำงานบนเครื่องคุณทั้งหมด ไม่มีการส่งข้อมูลออกไปที่ใด</p>
+    <ol class="steps">
+      <li>เลือกไฟล์ <code>treenourish-landing.html</code> ที่ใช้อยู่</li>
+      <li>แก้ไขข้อความและเปลี่ยนรูปในแท็บต่าง ๆ</li>
+      <li>กด <strong>บันทึกเป็นไฟล์ใหม่</strong> แล้วนำไฟล์ที่ได้ไปอัปโหลดแทนไฟล์เดิม</li>
+    </ol>
+    <div class="drop" id="drop">
+      <label class="btn btn-primary filebtn">เลือกไฟล์เว็บไซต์<input type="file" id="file" accept=".html,text/html"></label>
+      <p>หรือลากไฟล์ .html มาวางตรงนี้</p>
+    </div>
+  </section>
+
+  <div id="editor" class="hidden">
+    <nav class="tabs" id="tabs"></nav>
+    <div id="panels"></div>
+  </div>
+</main>
+
+<div class="savebar hidden" id="savebar">
+  <span class="status" id="status">พร้อมแก้ไข</span>
+  <span class="spacer"></span>
+  <button class="btn btn-ghost btn-sm" id="btn-preview">ดูตัวอย่าง</button>
+  <button class="btn btn-primary" id="btn-save">บันทึกเป็นไฟล์ใหม่</button>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var el = function (tag, cls, txt) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (txt !== undefined) n.textContent = txt;
+    return n;
+  };
+
+  var S = { name: 'treenourish-landing.html', doc: null, data: null, texts: [], titles: [], imgs: [], dirty: false };
+
+  /* ---------------- helpers ---------------- */
+  var tmr;
+  function toast(msg) {
+    var t = $('#toast'); t.textContent = msg; t.classList.add('on');
+    clearTimeout(tmr); tmr = setTimeout(function () { t.classList.remove('on'); }, 2600);
+  }
+  function touch() {
+    S.dirty = true;
+    $('#status').textContent = 'มีการแก้ไขที่ยังไม่ได้บันทึก';
+  }
+  function kb(dataUri) {
+    if (!dataUri) return '';
+    var b = dataUri.length - (dataUri.indexOf(',') + 1);
+    return Math.round(b * 0.75 / 1024) + ' KB';
+  }
+
+  /* resize an uploaded file into a data URI the page can embed */
+  function readImage(file, maxSide, cb) {
+    var fr = new FileReader();
+    fr.onload = function () {
+      var img = new Image();
+      img.onload = function () {
+        var w = img.naturalWidth, h = img.naturalHeight;
+        var scale = Math.min(1, maxSide / Math.max(w, h));
+        var cw = Math.round(w * scale), ch = Math.round(h * scale);
+        var c = document.createElement('canvas'); c.width = cw; c.height = ch;
+        var ctx = c.getContext('2d');
+        ctx.drawImage(img, 0, 0, cw, ch);
+        var out = c.toDataURL('image/webp', 0.82);
+        if (out.indexOf('data:image/webp') !== 0) out = c.toDataURL('image/jpeg', 0.85);
+        cb(out, cw, ch);
+      };
+      img.onerror = function () { toast('เปิดไฟล์รูปนี้ไม่ได้'); };
+      img.src = fr.result;
+    };
+    fr.readAsDataURL(file);
+  }
+
+  /* ---------------- field builders ---------------- */
+  function textField(label, value, onInput, multiline) {
+    var f = el('div', 'field');
+    if (label) f.appendChild(el('label', null, label));
+    var i = multiline ? el('textarea') : el('input');
+    if (!multiline) i.type = 'text';
+    i.value = value == null ? '' : value;
+    i.addEventListener('input', function () { onInput(i.value); touch(); });
+    f.appendChild(i);
+    return f;
+  }
+
+  function pairField(label, obj, multiline) {
+    var f = el('div', 'field');
+    if (label) f.appendChild(el('label', null, label));
+    var g = el('div', 'pair');
+    [['th', 'ไทย'], ['en', 'EN']].forEach(function (p) {
+      var box = el('div');
+      var lab = el('label');
+      var tag = el('span', 'lang-tag', p[1]); lab.appendChild(tag);
+      box.appendChild(lab);
+      var i = multiline ? el('textarea') : el('input');
+      if (!multiline) i.type = 'text';
+      i.value = obj[p[0]] == null ? '' : obj[p[0]];
+      i.addEventListener('input', function () { obj[p[0]] = i.value; touch(); });
+      box.appendChild(i);
+      g.appendChild(box);
+    });
+    f.appendChild(g);
+    return f;
+  }
+
+  /* bilingual list of bullet lines, one per line */
+  function listPairField(label, obj) {
+    var f = el('div', 'field');
+    f.appendChild(el('label', null, label + ' (บรรทัดละ 1 ข้อ)'));
+    var g = el('div', 'pair');
+    [['th', 'ไทย'], ['en', 'EN']].forEach(function (p) {
+      var box = el('div');
+      var lab = el('label'); lab.appendChild(el('span', 'lang-tag', p[1])); box.appendChild(lab);
+      var t = el('textarea');
+      t.style.minHeight = '110px';
+      t.value = (obj[p[0]] || []).join('\n');
+      t.addEventListener('input', function () {
+        obj[p[0]] = t.value.split('\n').map(function (x) { return x.trim(); }).filter(Boolean);
+        touch();
+      });
+      box.appendChild(t); g.appendChild(box);
+    });
+    f.appendChild(g);
+    return f;
+  }
+
+  function imageField(label, get, set, maxSide) {
+    var box = el('div', 'imgbox');
+    var th = el('div', 'thumb');
+    var img = el('img'); img.alt = '';
+    if (get()) img.src = get();
+    th.appendChild(img);
+    var meta = el('div', 'meta');
+    meta.appendChild(el('div', 'name', label));
+    var size = el('div', 'size', get() ? kb(get()) : 'ยังไม่มีรูป');
+    meta.appendChild(size);
+    var acts = el('div', 'acts');
+
+    var pick = el('label', 'btn btn-primary btn-sm filebtn');
+    pick.appendChild(document.createTextNode('เปลี่ยนรูป'));
+    var inp = el('input'); inp.type = 'file'; inp.accept = 'image/*';
+    inp.addEventListener('change', function () {
+      if (!inp.files[0]) return;
+      readImage(inp.files[0], maxSide || 900, function (uri) {
+        set(uri); img.src = uri; size.textContent = kb(uri); inp.value = '';
+        toast('เปลี่ยนรูปแล้ว');
+      });
+    });
+    pick.appendChild(inp);
+    acts.appendChild(pick);
+    meta.appendChild(acts);
+    box.appendChild(th); box.appendChild(meta);
+    return box;
+  }
+
+  function galleryField(label, arr, maxSide) {
+    var f = el('div', 'field');
+    f.appendChild(el('label', null, label + ' — ลำดับซ้ายไปขวาคือลำดับที่แสดงบนเว็บ'));
+    var grid = el('div', 'gallery-grid');
+
+    function draw() {
+      grid.innerHTML = '';
+      arr.forEach(function (src, idx) {
+        var it = el('div', 'gitem');
+        var im = el('img'); im.src = src; im.alt = '';
+        it.appendChild(im);
+        it.appendChild(el('div', 'size', kb(src)));
+        var acts = el('div', 'gacts');
+        var rep = el('label', 'filebtn'); rep.appendChild(document.createTextNode('เปลี่ยน'));
+        var ri = el('input'); ri.type = 'file'; ri.accept = 'image/*';
+        ri.addEventListener('change', function () {
+          if (!ri.files[0]) return;
+          readImage(ri.files[0], maxSide || 700, function (uri) { arr[idx] = uri; touch(); draw(); });
+        });
+        rep.appendChild(ri);
+        var lf = el('button', null, '←');
+        lf.addEventListener('click', function () {
+          if (idx === 0) return;
+          var t = arr[idx - 1]; arr[idx - 1] = arr[idx]; arr[idx] = t; touch(); draw();
+        });
+        var rt = el('button', null, '→');
+        rt.addEventListener('click', function () {
+          if (idx === arr.length - 1) return;
+          var t = arr[idx + 1]; arr[idx + 1] = arr[idx]; arr[idx] = t; touch(); draw();
+        });
+        var rm = el('button', null, 'ลบ');
+        rm.addEventListener('click', function () { arr.splice(idx, 1); touch(); draw(); });
+        acts.appendChild(rep); acts.appendChild(lf); acts.appendChild(rt); acts.appendChild(rm);
+        it.appendChild(acts);
+        grid.appendChild(it);
+      });
+      var add = el('div', 'gitem');
+      var addLab = el('label', 'btn btn-primary btn-sm filebtn');
+      addLab.appendChild(document.createTextNode('+ เพิ่มรูป'));
+      var ai = el('input'); ai.type = 'file'; ai.accept = 'image/*';
+      ai.addEventListener('change', function () {
+        if (!ai.files[0]) return;
+        readImage(ai.files[0], maxSide || 700, function (uri) { arr.push(uri); touch(); draw(); });
+      });
+      addLab.appendChild(ai);
+      add.style.display = 'grid'; add.style.placeItems = 'center'; add.style.minHeight = '130px';
+      add.appendChild(addLab);
+      grid.appendChild(add);
+    }
+    draw();
+    f.appendChild(grid);
+    return f;
+  }
+
+  function card(title, badge, open) {
+    var d = el('details', 'card');
+    if (open) d.open = true;
+    var s = el('summary');
+    s.appendChild(el('span', null, title));
+    if (badge) s.appendChild(el('span', 'badge', badge));
+    d.appendChild(s);
+    var b = el('div', 'body');
+    d.appendChild(b);
+    d.body = b;
+    return d;
+  }
+
+  function hint(text) { return el('div', 'hint', text); }
+
+  /* ---------------- parsing ---------------- */
+  var SECTION_NAMES = {
+    products: 'ผลิตภัณฑ์ของเรา', results: 'ผลลัพธ์ก่อน–หลัง', actives: 'ส่วนผสมจากธรรมชาติ',
+    research: 'วิจัยและพัฒนา', partners: 'ผลิตภัณฑ์จากพันธมิตร', reviews: 'รีวิวลูกค้า',
+    faq: 'คำถามที่พบบ่อย', contact: 'ฟุตเตอร์', 'menu-panel': 'เมนูมือถือ', 'cart-panel': 'ตะกร้าสินค้า'
+  };
+  function sectionOf(node) {
+    var p = node.closest('section[id],footer[id],aside[id],header,.buybar,.hero');
+    if (!p) return 'อื่น ๆ';
+    if (p.id && SECTION_NAMES[p.id]) return SECTION_NAMES[p.id];
+    if (p.tagName === 'HEADER') return 'แถบเมนูด้านบน';
+    if (p.classList.contains('hero')) return 'ส่วนหัวเว็บ (Hero)';
+    if (p.classList.contains('buybar')) return 'แถบสั่งซื้อบนมือถือ';
+    return p.id || 'อื่น ๆ';
+  }
+
+  function parseFile(html, name) {
+    var doc = new DOMParser().parseFromString(html, 'text/html');
+    var dataEl = doc.getElementById('site-data');
+    if (!dataEl) throw new Error('ไม่พบข้อมูลเนื้อหาในไฟล์นี้ กรุณาเลือกไฟล์ treenourish-landing.html ที่ถูกต้อง');
+    S.doc = doc;
+    S.name = name || S.name;
+    S.data = JSON.parse(dataEl.textContent);
+    S.dataEl = dataEl;
+    S.texts = $$('[data-th][data-en]', doc).filter(function (n) { return n.closest('script') === null; });
+    S.titles = $$('[data-title-th]', doc);
+    S.imgs = $$('img', doc).filter(function (n) { return (n.getAttribute('src') || '').indexOf('data:') === 0; });
+    S.dirty = false;
+  }
+
+  /* ---------------- panels ---------------- */
+  function panelTexts() {
+    var wrap = el('div');
+    wrap.appendChild(hint('ข้อความคงที่ทั้งหมดในหน้าเว็บ แก้ได้ทั้งภาษาไทยและอังกฤษ ช่องที่เว้นว่างไว้จะทำให้ข้อความหายไปจากหน้าเว็บ'));
+    var groups = {};
+    S.texts.forEach(function (n, i) {
+      var g = sectionOf(n);
+      (groups[g] = groups[g] || []).push({ node: n, i: i });
+    });
+    Object.keys(groups).forEach(function (g) {
+      var c = card(g, groups[g].length + ' ข้อความ');
+      groups[g].forEach(function (item) {
+        var n = item.node;
+        var obj = { th: n.dataset.th, en: n.dataset.en };
+        var long = (obj.th || '').length > 70;
+        var label = (n.tagName === 'H1' || n.tagName === 'H2' || n.tagName === 'H3') ? 'หัวข้อ' :
+          (n.tagName === 'BUTTON' || n.tagName === 'A') ? 'ปุ่ม / ลิงก์' : 'ข้อความ';
+        var f = pairField(label, obj, long);
+        f.addEventListener('input', function () { n.dataset.th = obj.th; n.dataset.en = obj.en; });
+        c.body.appendChild(f);
+      });
+      wrap.appendChild(c);
+    });
+    if (S.titles.length) {
+      var tc = card('ข้อความบนไอคอน (tooltip)', S.titles.length + ' รายการ');
+      S.titles.forEach(function (n) {
+        var obj = { th: n.dataset.titleTh, en: n.dataset.titleEn };
+        var f = pairField('คำอธิบายไอคอน', obj);
+        f.addEventListener('input', function () { n.dataset.titleTh = obj.th; n.dataset.titleEn = obj.en; });
+        tc.body.appendChild(f);
+      });
+      wrap.appendChild(tc);
+    }
+    return wrap;
+  }
+
+  var PRODUCT_LABEL = {
+    sachet: 'ทานาคา เคลย์ ครีม — แบบซอง', box: 'ทานาคา เคลย์ ครีม — แบบกล่อง',
+    tube: 'ทานาคา เคลย์ ครีม — แบบหลอด', oil: 'สินค้าพันธมิตร — น้ำมันนวด', rice: 'สินค้าพันธมิตร — ข้าวชง'
+  };
+  function panelProducts() {
+    var wrap = el('div');
+    wrap.appendChild(hint('แก้ชื่อ ราคา คำอธิบาย และรูปสินค้า รวมถึงเนื้อหาในหน้า “ดูรายละเอียดเพิ่มเติม” ราคากรอกเป็นตัวเลขเท่านั้น เช่น 59'));
+    Object.keys(S.data.P).forEach(function (key) {
+      var p = S.data.P[key], d = S.data.DETAIL[key] || {};
+      var c = card(PRODUCT_LABEL[key] || key, p.price ? '฿' + p.price : 'ยังไม่เปิดขาย');
+      c.body.appendChild(el('div', 'sec-title', 'ข้อมูลบนการ์ดสินค้า'));
+      c.body.appendChild(pairField('ชื่อสินค้า', p.name));
+      c.body.appendChild(pairField('ขนาด / รุ่น', p.variant));
+      c.body.appendChild(pairField('หน่วยนับ (ซอง / กล่อง)', p.unit));
+      if (p.desc) c.body.appendChild(pairField('คำอธิบายสั้นใต้ชื่อ', p.desc, true));
+      if (p.cap) c.body.appendChild(pairField('ป้ายมุมซ้ายบน', p.cap));
+      if (p.tag) c.body.appendChild(pairField('ป้ายมุมขวาบน', p.tag));
+      if (p.save) c.body.appendChild(pairField('ป้ายส่วนลดข้างราคา', p.save));
+      if (p.note) c.body.appendChild(pairField('กล่องข้อความเรื่องจัดส่ง', p.note, true));
+
+      var prow = el('div', 'row');
+      prow.appendChild(textField('ราคาขาย (บาท)', p.price, function (v) { p.price = v === '' ? null : Number(v); }));
+      prow.appendChild(textField('ราคาก่อนลด (บาท)', p.was == null ? '' : p.was, function (v) { p.was = v === '' ? null : Number(v); }));
+      prow.appendChild(textField('จำนวนคงเหลือในสต็อก', p.stock == null ? '' : p.stock, function (v) {
+        p.stock = v === '' ? null : Math.max(0, Math.floor(Number(v) || 0));
+      }));
+      c.body.appendChild(prow);
+      c.body.appendChild(hint('สต็อกน้อยกว่าหรือเท่ากับ 15 จะขึ้นเป็นข้อความสีส้ม “เหลือน้อย” และถ้าใส่ 0 หน้าเว็บจะแสดงว่าสินค้าหมดพร้อมปิดปุ่มสั่งซื้อ เว้นว่างไว้ถ้าไม่ต้องการแสดงจำนวน'));
+
+      c.body.appendChild(el('div', 'sec-title', 'รูปสินค้า'));
+      if (!p.gallery) p.gallery = [];
+      c.body.appendChild(galleryField('แกลเลอรีรูปสินค้า', p.gallery, 760));
+      if (p.soon) c.body.appendChild(hint('สินค้านี้ตั้งเป็น “ยังไม่เปิดขาย” ถ้าไม่ใส่รูปเลย เว็บจะแสดงป้าย Coming soon ให้อัตโนมัติ'));
+
+      c.body.appendChild(el('div', 'sec-title', 'หน้ารายละเอียดเพิ่มเติม'));
+      if (d.about) c.body.appendChild(pairField('คำอธิบายแบบยาว', d.about, true));
+      if (d.highlights) c.body.appendChild(listPairField('จุดเด่น', d.highlights));
+      if (d.ing) c.body.appendChild(listPairField('ส่วนผสมสำคัญ', d.ing));
+      if (d.how) c.body.appendChild(listPairField('วิธีใช้', d.how));
+      if (d.warn) c.body.appendChild(listPairField('ข้อควรระวัง', d.warn));
+      if (d.store) c.body.appendChild(listPairField('การเก็บรักษา', d.store));
+      if (d.facts) c.body.appendChild(listPairField('ข้อมูลผลิตภัณฑ์', d.facts));
+
+      if (d.reviews) {
+        c.body.appendChild(el('div', 'sec-title', 'รีวิวในหน้ารายละเอียด'));
+        c.body.appendChild(listEditor(d.reviews, function (r) { return r.who ? r.who.th : 'รีวิว'; }, function (r, host) {
+          host.appendChild(textField('จำนวนดาว (1–5)', r.s, function (v) { r.s = Math.max(1, Math.min(5, Number(v) || 5)); }));
+          host.appendChild(pairField('ข้อความรีวิว', r, true));
+          host.appendChild(pairField('ชื่อผู้รีวิว', r.who));
+        }, function () { return { s: 5, th: '', en: '', who: { th: '', en: '' } }; }, 'เพิ่มรีวิว'));
+      }
+      wrap.appendChild(c);
+    });
+
+    var lc = card('ข้อความกลางที่ใช้ร่วมกันทุกขนาด (จากฉลากสินค้า)');
+    var L = S.data.LABEL;
+    lc.body.appendChild(textField('ส่วนผสมทั้งหมด (INCI)', L.ingredients, function (v) { L.ingredients = v; }, true));
+    lc.body.appendChild(listPairField('วิธีใช้', L.how));
+    lc.body.appendChild(listPairField('ข้อควรระวัง', L.warn));
+    lc.body.appendChild(listPairField('การเก็บรักษา', L.store));
+    lc.body.appendChild(listPairField('ข้อมูลผลิตภัณฑ์', L.facts));
+    lc.body.appendChild(listPairField('จุดเด่นของครีม', S.data.CLAY_HIGHLIGHTS));
+    wrap.appendChild(lc);
+    return wrap;
+  }
+
+  /* generic add / remove list editor */
+  function listEditor(arr, titleFn, renderFn, makeNew, addLabel) {
+    var host = el('div');
+    function draw() {
+      host.innerHTML = '';
+      arr.forEach(function (item, idx) {
+        var box = el('div', 'listitem');
+        var head = el('div', 'lhead');
+        head.appendChild(el('strong', null, (idx + 1) + '. ' + (titleFn(item) || '')));
+        head.appendChild(el('span', 'spacer'));
+        var up = el('button', 'btn btn-sm btn-danger', '↑');
+        up.style.color = 'var(--forest)'; up.style.borderColor = 'rgba(44,74,62,.25)';
+        up.addEventListener('click', function () {
+          if (idx === 0) return;
+          var t = arr[idx - 1]; arr[idx - 1] = arr[idx]; arr[idx] = t; touch(); draw();
+        });
+        var dn = el('button', 'btn btn-sm btn-danger', '↓');
+        dn.style.color = 'var(--forest)'; dn.style.borderColor = 'rgba(44,74,62,.25)';
+        dn.addEventListener('click', function () {
+          if (idx === arr.length - 1) return;
+          var t = arr[idx + 1]; arr[idx + 1] = arr[idx]; arr[idx] = t; touch(); draw();
+        });
+        var rm = el('button', 'btn btn-sm btn-danger', 'ลบ');
+        rm.addEventListener('click', function () {
+          if (!window.confirm('ลบรายการนี้?')) return;
+          arr.splice(idx, 1); touch(); draw();
+        });
+        head.appendChild(up); head.appendChild(dn); head.appendChild(rm);
+        box.appendChild(head);
+        renderFn(item, box);
+        host.appendChild(box);
+      });
+      var add = el('div', 'addrow');
+      var ab = el('button', 'btn btn-primary btn-sm', '+ ' + (addLabel || 'เพิ่มรายการ'));
+      ab.addEventListener('click', function () { arr.push(makeNew()); touch(); draw(); });
+      add.appendChild(ab);
+      host.appendChild(add);
+    }
+    draw();
+    return host;
+  }
+
+  function panelIngredients() {
+    var wrap = el('div');
+    wrap.appendChild(hint('รายการสารสกัดในหัวข้อ “ส่วนผสมจากธรรมชาติ” เพิ่ม ลบ และสลับลำดับได้ รูปจะถูกครอบเป็นวงกลม แนะนำให้ใช้รูปสี่เหลี่ยมจัตุรัส'));
+    wrap.appendChild(listEditor(S.data.INGREDIENTS, function (i) { return i.en; }, function (i, host) {
+      host.appendChild(textField('ชื่อภาษาอังกฤษ (หัวข้อ)', i.en, function (v) { i.en = v; }));
+      host.appendChild(textField('ชื่อภาษาไทย (บรรทัดรอง)', i.th, function (v) { i.th = v; }));
+      if (i.sub) host.appendChild(pairField('บรรทัดย่อย (เช่น รายชื่อพืช)', i.sub, true));
+      host.appendChild(pairField('คำอธิบาย', i.d, true));
+      host.appendChild(imageField('รูปประกอบ', function () { return i.img; }, function (v) { i.img = v; delete i.icon; }, 320));
+    }, function () { return { img: '', en: '', th: '', d: { th: '', en: '' } }; }, 'เพิ่มสารสกัด'));
+    return wrap;
+  }
+
+  function panelBA() {
+    var wrap = el('div');
+    wrap.appendChild(hint('ภาพเปรียบเทียบก่อนและหลัง ควรใช้รูปสองใบที่ถ่ายในมุมและแสงเดียวกัน กรอบแสดงผลเป็นสี่เหลี่ยมจัตุรัส'));
+    wrap.appendChild(listEditor(S.data.BA, function (b) { return b.t ? b.t.th : ''; }, function (b, host) {
+      host.appendChild(pairField('หัวข้อ', b.t));
+      host.appendChild(pairField('คำอธิบาย', b.p, true));
+      host.appendChild(pairField('ข้อความมุมล่าง (ระยะเวลาที่ใช้)', b.meta));
+      var g = el('div', 'row');
+      g.appendChild(imageField('รูปก่อนใช้', function () { return b.before; }, function (v) { b.before = v; }, 760));
+      g.appendChild(imageField('รูปหลังใช้', function () { return b.after; }, function (v) { b.after = v; }, 760));
+      host.appendChild(g);
+    }, function () {
+      return { before: '', after: '', t: { th: '', en: '' }, p: { th: '', en: '' }, meta: { th: '', en: '' } };
+    }, 'เพิ่มตัวอย่างผลลัพธ์'));
+    return wrap;
+  }
+
+  function panelReviews() {
+    var wrap = el('div');
+    wrap.appendChild(hint('รีวิวที่แสดงในแถบเลื่อน ตัวอักษรแรกของชื่อภาษาอังกฤษจะถูกใช้เป็นรูปโปรไฟล์วงกลม'));
+    wrap.appendChild(listEditor(S.data.REVIEWS, function (r) { return r.n ? r.n.th : ''; }, function (r, host) {
+      host.appendChild(textField('จำนวนดาว (1–5)', r.s, function (v) { r.s = Math.max(1, Math.min(5, Number(v) || 5)); }));
+      host.appendChild(pairField('ข้อความรีวิว', r, true));
+      host.appendChild(pairField('ชื่อผู้รีวิว', r.n));
+      host.appendChild(pairField('บรรทัดใต้ชื่อ (ระยะเวลา · สภาพผิว)', r.m));
+    }, function () {
+      return { s: 5, th: '', en: '', n: { th: '', en: '' }, m: { th: '', en: '' } };
+    }, 'เพิ่มรีวิว'));
+    return wrap;
+  }
+
+  function panelFaq() {
+    var wrap = el('div');
+    wrap.appendChild(hint('คำถามที่พบบ่อย แสดงเป็นแถบพับเปิด–ปิด และถูกส่งให้ Google อ่านเป็นข้อมูล FAQ ด้วย'));
+    wrap.appendChild(listEditor(S.data.FAQS, function (f) { return f.q ? f.q.th : ''; }, function (f, host) {
+      host.appendChild(pairField('คำถาม', f.q));
+      host.appendChild(pairField('คำตอบ', f.a, true));
+    }, function () { return { q: { th: '', en: '' }, a: { th: '', en: '' } }; }, 'เพิ่มคำถาม'));
+    return wrap;
+  }
+
+  var IMG_LABEL = [
+    [/logo/i, 'โลโก้'], [/hero-box/i, 'รูปกล่องในส่วนหัว'], [/hero-sachet/i, 'รูปซองในส่วนหัว']
+  ];
+  function panelImages() {
+    var wrap = el('div');
+    wrap.appendChild(hint('รูปที่ฝังอยู่ในหน้าเว็บโดยตรง เช่น โลโก้ รูปในส่วนหัว รูปห้องแล็บ และภาพกราฟิก รูปสินค้าอยู่ในแท็บ “สินค้า”'));
+    var c = card('รูปทั้งหมดในหน้าเว็บ', S.imgs.length + ' รูป', true);
+    S.imgs.forEach(function (n, i) {
+      var label = n.getAttribute('alt') || '';
+      if (!label) {
+        var cls = n.className || '';
+        IMG_LABEL.some(function (m) { if (m[0].test(cls)) { label = m[1]; return true; } return false; });
+      }
+      if (!label) label = 'รูปที่ ' + (i + 1);
+      c.body.appendChild(imageField(label, function () { return n.getAttribute('src'); },
+        function (v) { n.setAttribute('src', v); }, 1100));
+      c.body.appendChild(textField('คำอธิบายรูป (alt — ช่วยเรื่อง SEO)', n.getAttribute('alt') || '', function (v) { n.setAttribute('alt', v); }));
+    });
+    wrap.appendChild(c);
+    return wrap;
+  }
+
+  function panelMisc() {
+    var wrap = el('div');
+    wrap.appendChild(hint('แถบประกาศวิ่งด้านบนสุด และลิงก์คลิป TikTok'));
+    var tc = card('แถบประกาศด้านบน', S.data.TICK.length + ' ข้อความ', true);
+    tc.body.appendChild(listEditor(S.data.TICK, function (t) { return t.th; }, function (t, host) {
+      host.appendChild(textField('ไอคอน (อีโมจิ)', t.icon, function (v) { t.icon = v; }));
+      host.appendChild(pairField('ข้อความ', t));
+    }, function () { return { icon: '✅', th: '', en: '' }; }, 'เพิ่มข้อความประกาศ'));
+    wrap.appendChild(tc);
+
+    var vc = card('คลิป TikTok', '', true);
+    var V = S.data.VIDEO;
+    vc.body.appendChild(textField('ชื่อบัญชี (ไม่ต้องใส่ @)', V.handle, function (v) { V.handle = v; }));
+    vc.body.appendChild(textField('ลิงก์บัญชี', V.url, function (v) { V.url = v; }));
+    vc.body.appendChild(textField('เลขไอดีคลิป (ใส่แล้วคลิปจะเล่นในหน้าเว็บ)', V.videoId, function (v) { V.videoId = v.trim(); }));
+    vc.body.appendChild(imageField('ภาพปกคลิป', function () { return V.poster; }, function (v) { V.poster = v; }, 760));
+    wrap.appendChild(vc);
+    return wrap;
+  }
+
+  /* ---------------- build editor ---------------- */
+  var TABS = [
+    { id: 'texts', label: 'ข้อความในหน้า', build: panelTexts, count: function () { return S.texts.length; } },
+    { id: 'products', label: 'สินค้า', build: panelProducts, count: function () { return Object.keys(S.data.P).length; } },
+    { id: 'ing', label: 'ส่วนผสม', build: panelIngredients, count: function () { return S.data.INGREDIENTS.length; } },
+    { id: 'ba', label: 'ผลลัพธ์ก่อน–หลัง', build: panelBA, count: function () { return S.data.BA.length; } },
+    { id: 'rev', label: 'รีวิว', build: panelReviews, count: function () { return S.data.REVIEWS.length; } },
+    { id: 'faq', label: 'FAQ', build: panelFaq, count: function () { return S.data.FAQS.length; } },
+    { id: 'imgs', label: 'รูปในหน้าเว็บ', build: panelImages, count: function () { return S.imgs.length; } },
+    { id: 'misc', label: 'ประกาศ & TikTok', build: panelMisc, count: function () { return S.data.TICK.length; } }
+  ];
+
+  function buildEditor() {
+    var tabs = $('#tabs'), panels = $('#panels');
+    tabs.innerHTML = ''; panels.innerHTML = '';
+    TABS.forEach(function (t, i) {
+      var b = el('button');
+      b.appendChild(document.createTextNode(t.label));
+      b.appendChild(el('span', 'count', String(t.count())));
+      b.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+      b.addEventListener('click', function () {
+        $$('#tabs button').forEach(function (x) { x.setAttribute('aria-selected', 'false'); });
+        b.setAttribute('aria-selected', 'true');
+        $$('#panels .panel').forEach(function (x) { x.classList.remove('on'); });
+        $('#panel-' + t.id).classList.add('on');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+      tabs.appendChild(b);
+      var p = el('div', 'panel' + (i === 0 ? ' on' : ''));
+      p.id = 'panel-' + t.id;
+      p.appendChild(t.build());
+      panels.appendChild(p);
+    });
+    $('#loader').classList.add('hidden');
+    $('#editor').classList.remove('hidden');
+    $('#savebar').classList.remove('hidden');
+    $('#status').textContent = 'โหลดไฟล์แล้ว · ' + S.name;
+  }
+
+  /* ---------------- output ---------------- */
+  function buildHtml() {
+    S.texts.forEach(function (n) { n.textContent = n.dataset.th; });
+    S.titles.forEach(function (n) {
+      n.setAttribute('title', n.dataset.titleTh);
+      n.setAttribute('aria-label', n.dataset.titleTh);
+    });
+    S.dataEl.textContent = '\n' + JSON.stringify(S.data, null, 1) + '\n';
+    return '<!DOCTYPE html>\n' + S.doc.documentElement.outerHTML;
+  }
+
+  function download() {
+    var html = buildHtml();
+    var blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = S.name.replace(/\.html?$/i, '') + '.html';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+    S.dirty = false;
+    $('#status').textContent = 'บันทึกแล้ว · ' + new Date().toLocaleTimeString('th-TH');
+    toast('บันทึกไฟล์แล้ว นำไปอัปโหลดแทนไฟล์เดิมได้เลย');
+  }
+
+  function preview() {
+    var blob = new Blob([buildHtml()], { type: 'text/html;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    window.open(url, '_blank');
+    setTimeout(function () { URL.revokeObjectURL(url); }, 60000);
+  }
+
+  /* ---------------- wiring ---------------- */
+  function load(file) {
+    if (!file) return;
+    var fr = new FileReader();
+    fr.onload = function () {
+      try {
+        parseFile(fr.result, file.name);
+        buildEditor();
+        toast('โหลดไฟล์เรียบร้อย');
+      } catch (e) {
+        window.alert('เปิดไฟล์ไม่สำเร็จ\n\n' + (e && e.message ? e.message : e));
+      }
+    };
+    fr.readAsText(file, 'utf-8');
+  }
+
+  $('#file').addEventListener('change', function (e) { load(e.target.files[0]); });
+  var drop = $('#drop');
+  ['dragenter', 'dragover'].forEach(function (ev) {
+    drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.add('over'); });
+  });
+  ['dragleave', 'drop'].forEach(function (ev) {
+    drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.remove('over'); });
+  });
+  drop.addEventListener('drop', function (e) { load(e.dataTransfer.files[0]); });
+
+  $('#btn-save').addEventListener('click', download);
+  $('#btn-preview').addEventListener('click', preview);
+  $('#btn-reload').addEventListener('click', function () {
+    if (S.dirty && !window.confirm('ยังมีการแก้ไขที่ไม่ได้บันทึก ต้องการโหลดไฟล์ใหม่หรือไม่?')) return;
+    $('#editor').classList.add('hidden');
+    $('#savebar').classList.add('hidden');
+    $('#loader').classList.remove('hidden');
+    $('#file').value = '';
+  });
+  window.addEventListener('beforeunload', function (e) {
+    if (S.dirty) { e.preventDefault(); e.returnValue = ''; }
+  });
+})();
+
+</script>
+</body>
+</html>
